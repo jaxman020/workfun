@@ -1,5 +1,12 @@
-<!DOCTYPE HTML>
-
+<?php
+    //error_reporting(0);
+    session_start();
+    require_once('function.php');
+    global $db;
+    $member = new member();
+    $username = $_SESSION['username'];
+    $table = record;
+?>
 <html>
 	<head>
 		<title>上班打卡趣</title>
@@ -33,26 +40,16 @@
 		<!-- Footer -->
 		<div id="featured">
 			<div class="container">
-				<div class="row">
-					<div class="4u">
-						<h2>小妹</h2>
-						<a href="#" class="image full"><img src="images/gril.jpg" alt="" /></a>
-						<p></p>
-						<p><a href="#" class="button">More Details</a></p>
-					</div>
-					<div class="4u">
-						<h2>二哥</h2>
-						<a href="#" class="image full"><img src="images/boy2.jpg" alt="" /></a>
-						<p></p>
-						<p><a href="#" class="button">More Details</a></p>
-					</div>
-					<div class="4u">
-						<h2>4弟</h2>
-						<a href="#" class="image full"><img src="images/boy.jpg" alt="" /></a>
-						<p></p>
-						<p><a href="#" class="button">More Details</a></p>
-					</div>
-				</div>
+			<a href="#" class="button">新增</a>
+			<a href="#" class="button">刪除</a>
+			<a href="#" class="button">修改</a>
+		<p>	
+			<?php
+                
+                $member->select($username);
+            ?>
+		</p>
+			
 			</div>
 		</div>
 

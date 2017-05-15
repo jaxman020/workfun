@@ -1,12 +1,5 @@
 <?php
-/**
- *changken會員系統專用函數庫
- *簡介:為促進程式開發人員方便開發，changken特別製作專用函數庫。
- *作者:changken 
- *使用方式:請將函數直接複製即可。注意！一定要引入此函數庫，不然不能使用！
- *函數:reg()、login()、update()、delete_u()、logout()、getUserinfoBn()
- *版本:v1.2
- */
+
 require_once("config.inc.php");
 
 class member
@@ -14,7 +7,9 @@ class member
     var $login;
     var $login_sal;
     var $login_row;
-    var $select_e;
+    var $select;
+    var $select_b;
+    var $table;
     var $select_sql;
     var $update;
     var $update_sql;
@@ -59,30 +54,60 @@ class member
         }
     }
     
-    function getUserinfoBn($username)
+    function getuser($username)
 	{
 		global $db;
-		$this->getuser_sql = "SELECT * FROM `account` WHERE `username`= :username;";
-		$this->getuser = $db->prepare($this->getuser_sql);
-		$this->getuser->bindParam(":username",$username);
-		$this->getuser->execute();
-		$this->getuser_row= $this->getuser->fetch();
-		return  $this->getuser_row;
-	}
-    
-    function select_e($username) {
-        global $db;
-        $stat = $db->prepare("select * from employee join account on employee.eid=account.eid where account.acc= :username;");
+        $stat = $db->prepare("select * from employee ;");
         $stat->bindParam(':username',$username);
         $stat->execute();
+        echo "<table style='border: solid 3px black;'><tr><th>EID</th><th style='border: solid 3px black;'>名字</th><th style='border: solid 3px black;'>性別</th>
+        <th style='border: solid 3px black;'>生日</th><th style='border: solid 3px black;'>電話</th><th style='border: solid 3px black;'>身分證字號</th>
+        <th style='border: solid 3px black;'>職稱</th><th style='border: solid 3px black;'>住址</th><th style='border: solid 3px black;'>電子郵件</th>
+        <th style='border: solid 3px black;'>DID</th></tr>";
         while($row = $stat->fetch(PDO::FETCH_ASSOC)){
-            echo "id : ". $row["eid"]. " Name : ". $row["ename"]. " sex : " . $row["sex"]. " bir : ". $row["bir"]." phone : ". $row["phone"]." idnum : ". $row["idnum"]." pos : ". $row["pos"]." add : ". $row["add"]. " email : ". $row["email"]." did : ". $row["did"]."<br>";
-        }
-            /*$stmt = $db->prepare($this, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
-            $stmt->execute();
-            while ($row = $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
-              $data = $row[0] . "\t" . $row[1] . "\t" . $row[2] . "\n";
-              print $data;*/
+            echo "<tr><th style='border: solid 3px black;'>". $row["eid"]. 
+                 "</th><th style='border: solid 3px black;'>". $row["ename"]. 
+                 "</th><th style='border: solid 3px black;'>". $row["sex"]. 
+                 "</th><th style='border: solid 3px black;'>". $row["bir"].
+                 "</th><th style='border: solid 3px black;'>". $row["phone"].
+                 "</th><th style='border: solid 3px black;'>". $row["idnum"].
+                 "</th><th style='border: solid 3px black;'>". $row["pos"].
+                 "</th><th style='border: solid 3px black;'>". $row["add"]. 
+                 "</th><th style='border: solid 3px black;'>". $row["email"].
+                 "</th><th style='border: solid 3px black;'>". $row["did"]."</th></tr>";}
+	}
+    
+    function select($username) 
+    {
+        global $db;
+        $stat = $db->prepare("select * from record;");
+        $stat->bindParam(':username',$username);
+        $stat->execute();
+        echo "<table style='border: solid 3px black;'><tr><th>EID</th><th style='border: solid 3px black;'>DID</th><th style='border: solid 3px black;'>RID</th>
+        <th style='border: solid 3px black;'>上班</th><th style='border: solid 3px black;'>下班</th></tr>";
+        while($row = $stat->fetch(PDO::FETCH_ASSOC)){
+        echo "<tr><th style='border: solid 3px black;'>". $row["eid"]. 
+             "</th><th style='border: solid 3px black;'>". $row["did"]. 
+             "</th><th style='border: solid 3px black;'>". $row["rid"].   
+             "</th><th style='border: solid 3px black;'>". $row["F1"].
+             "</th><th style='border: solid 3px black;'>". $row["F2"]."</th></tr>";}  
     }
+    
+    function select_b($username) 
+    {
+        global $db;
+        $stat = $db->prepare("select * from board;");
+        $stat->bindParam(':username',$username);
+        $stat->execute();
+        echo "<table style='border: solid 3px black;'><tr><th>日期</th><th style='border: solid 3px black;'>公告</th></tr>";
+        while($row = $stat->fetch(PDO::FETCH_ASSOC)){
+        echo 
+            "<tr><th style='border: solid 3px black;'>". $row["date"]. 
+            "</th><th style='border: solid 3px black;'>".$row["txt"]. "</th></tr>";}
+        
+        
+    }
+    
+    
 }
 ?>

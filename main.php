@@ -14,6 +14,19 @@
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-panels.min.js"></script>
 		<script src="js/init.js"></script>	
+        <script type="text/javascript">
+            function getData(pageName)
+            {
+                var req=new XMLHttpRequest();
+                req.open("get","http://163.17.9.106/suck%20it%20leo/"+pageName);
+                req.onload=function(){
+                    var featured=document.getElementById("featured");
+                    featured.innerHTML=this.responseText;
+                };
+                req.send();
+            }
+        </script>
+        
 	</head>
 	<body class="homepage">
 
@@ -43,10 +56,14 @@
 		<!-- Footer -->
 		<div id="featured">
 			<div class="container">
+                <span onclick="getData('EMPLOYEEtext.php');"><a class="button">新增</a></span>
+                <span onclick="getData('EMPLOYEEtext.php');"><a class="button">刪除</a></span>
+                <span onclick="getData('EMPLOYEEtext.php');"><a class="button">修改</a></span>
+		<p>	
 			<?php
-                $member->select_e($username);
+                $member->getuser($username);
             ?>
-
+		</p>
 			
 			</div>
 		</div>

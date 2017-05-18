@@ -1,3 +1,7 @@
+<?php
+     session_start();
+     $_SESSION['LoginSuccess'] = false;
+?>
 <!DOCTYPE HTML>
 <meta charset="UTF-8">
 <html>
@@ -17,7 +21,7 @@
 				<div id="logo">
 				<img src="images/bag.jpg" width="100px"><br>
 				<br>
-					<h1><a href="main.php">上班打卡趣</a></h1>
+					<h1><a>上班打卡趣</a></h1>
 				</div>
 				
 				<!-- Nav -->

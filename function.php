@@ -5,22 +5,26 @@ require_once("config.inc.php");
 class member
 {
     var $login;
-    var $login_sal;
+    var $login_sql;
     var $login_row;
-    var $select;
     var $select_b;
+    var $select_r;
     var $table;
     var $select_sql;
     var $update;
     var $update_sql;
     var $delete_u;
     var $delete_sql;
+    var $delete_e;
+    var $detlete_row;
     var $getuser;
     var $getuser_sql;
     var $getuser_row;
+    var $insert;
     
     //登入函數
-    function login($username, $password){
+    function login($username, $password) 
+    {
         global $db;
         $this->login_sql="SELECT * FROM `account` WHERE `acc`=:username AND `pwd`=:password;";
 		$this->login = $db->prepare($this->login_sql);
@@ -28,34 +32,39 @@ class member
         $this->login->bindParam(":password", $password);
 		$this->login->execute();
 		$this->login_row = $this->login->fetch();
-        if($username == null){
+        if($username == null)
+        {
             echo"<span style=\"color:red;\">錯誤！使用者名稱不能為空！</span>";
 			echo'<meta http-equiv="refresh" content="2; url=login.html">';
         }
-        elseif($password == null){
+        elseif($password == null)
+        {
             echo"<span style=\"color:red;\">錯誤！密碼不能為空！</span>";
 			echo'<meta http-equiv="refresh" content="2; url=login.html">';
         }
-        elseif($username != $this -> login_row['acc'] or $password != $this -> login_row['pwd']){
+        elseif($username != $this -> login_row['acc'] or $password != $this -> login_row['pwd'])
+        {
             echo"<span style=\"color:red;\">錯誤！查無使用者或密碼錯誤！</span>";
 			echo'<meta http-equiv="refresh" content="2; url=login.html">';
         }
         else{
-            if($username = $this -> login_row['acc']){
+            if($username = $this -> login_row['acc'])
+            {
                 echo"<span style=\"color:green;\">登入成功！</span>";
                 $_SESSION['LoginSuccess'] = true;
                 echo'<meta http-equiv="refresh" content="2; url=main.php">';
                 $_SESSION['username']=$username;
             }
-            else{
+            else
+            {
                 echo"<span style=\"color:red;\">登入失敗！</span>";
                 echo'<meta http-equiv="refresh" content="2; url=login.html">';
             }
         }
     }
     
-    function getuser($username)
-	{
+    function select_e($username)
+    {
 		global $db;
         $stat = $db->prepare("select * from employee ;");
         $stat->bindParam(':username',$username);
@@ -77,7 +86,7 @@ class member
                  "</th><th style='border: solid 3px black;'>". $row["did"]."</th></tr>";}
 	}
     
-    function select($username) 
+    function select_r($username) 
     {
         global $db;
         $stat = $db->prepare("select * from record;");
@@ -104,10 +113,40 @@ class member
         echo 
             "<tr><th style='border: solid 3px black;'>". $row["date"]. 
             "</th><th style='border: solid 3px black;'>".$row["txt"]. "</th></tr>";}
-        
-        
     }
+    /*function insert($username, $password) {
+        global $db;
+        $stat = $db->prepare("INSERT INTO account('acc','pwd') VALUES (':username',':password');");
+        $stat->bindParam(':username',$username);
+        $stat->bindParam(':password',$password);
+
+        $stat->execute();
+    }*/
     
+    function delete_e($username) 
+    {
+        global $db;
+        if($_SESSION['LoginSuccess']== true)
+		{
+            $stat =$db->prepare("DELETE FROM employee WHERE eid=:username;");
+            $stat->bindParam(':username', $username);
+            if($username == null)
+            {
+                echo"<span style=\"color:red;\">錯誤！不能為空！</span>";
+            }
+            
+            elseif($stat->execute())
+                {
+                    echo"<span style=\"color:green;\">刪除成功！</span>";
+                    echo'<meta http-equiv="refresh" content="2; url=main.php">';
+                }
+            else
+                {
+                    echo"<span style=\"color:red;\">刪除失敗！</span>";
+                    echo'<meta http-equiv="refresh" content="2; url=main.php">';
+                }
+        }
+    }
     
 }
 ?>

@@ -13,6 +13,21 @@
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-panels.min.js"></script>
 		<script src="js/init.js"></script>
+        <script src="js/skel.min.js"></script>
+		<script src="js/skel-panels.min.js"></script>
+		<script src="js/init.js"></script>	
+        <script type="text/javascript">
+            function getData(pageName)
+            {
+                var req=new XMLHttpRequest();
+                req.open("get","http://127.0.0.1/workfun/workfun/"+pageName);
+                req.onload=function(){
+                    var featured=document.getElementById("featured");
+                    featured.innerHTML=this.responseText;
+                };
+                req.send();
+            }
+        </script>
 	</head>
 	<body class="homepage">
 
@@ -40,13 +55,13 @@
 		<!-- Footer -->
 		<div id="featured">
 			<div class="container">
-			<a href="#" class="button">新增</a>
-			<a href="#" class="button">刪除</a>
-			<a href="#" class="button">修改</a>
+			<span onclick="getData('EMPLOYEEtext.php');"><a class="button">新增</a></span>
+                <span onclick="getData('deletetext.php');"><a class="button">刪除</a></span>
+                <span onclick="getData('EMPLOYEEtext.php');"><a class="button">修改</a></span>
 		<p>	
 			<?php
                 
-                $member->select($username);
+                $member->select_r($username);
             ?>
 		</p>
 			

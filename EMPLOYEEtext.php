@@ -1,6 +1,6 @@
 <html>
 	
-    <form action="#" method="post">
+    <form action="insert_e.php" method="post">
     <div class=out1 style='text-align:center'>EID：<input type="text" name="EID"><p></div>
         <p>
 	<div class=out1 style='text-align:center'>名字：<input type="text" name="ENAME"><p></div>

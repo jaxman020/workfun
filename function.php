@@ -20,7 +20,7 @@ class member
     var $getuser;
     var $getuser_sql;
     var $getuser_row;
-    var $insert;
+    var $insert_e;
     
     //登入函數
     function login($username, $password) 
@@ -34,18 +34,18 @@ class member
 		$this->login_row = $this->login->fetch();
         if($username == null)
         {
-            echo"<span style=\"color:red;\">錯誤！使用者名稱不能為空！</span>";
-			echo'<meta http-equiv="refresh" content="2; url=login.html">';
+            echo"<script>alert('錯誤！使用者名稱不能為空！')</script>";
+            echo "<script>history.go(-1);</script>";
         }
         elseif($password == null)
         {
-            echo"<span style=\"color:red;\">錯誤！密碼不能為空！</span>";
-			echo'<meta http-equiv="refresh" content="2; url=login.html">';
+            echo"<script>alert('錯誤！密碼不能為空！')</script>";
+            echo "<script>history.go(-1);</script>";
         }
         elseif($username != $this -> login_row['acc'] or $password != $this -> login_row['pwd'])
         {
             echo"<span style=\"color:red;\">錯誤！查無使用者或密碼錯誤！</span>";
-			echo'<meta http-equiv="refresh" content="2; url=login.html">';
+			echo "<script>history.go(-1);</script>";
         }
         else{
             if($username = $this -> login_row['acc'])
@@ -58,7 +58,7 @@ class member
             else
             {
                 echo"<span style=\"color:red;\">登入失敗！</span>";
-                echo'<meta http-equiv="refresh" content="2; url=login.html">';
+                echo "<script>history.go(-1);</script>";
             }
         }
     }
@@ -114,36 +114,54 @@ class member
             "<tr><th style='border: solid 3px black;'>". $row["date"]. 
             "</th><th style='border: solid 3px black;'>".$row["txt"]. "</th></tr>";}
     }
-    /*function insert($username, $password) {
+    function insert_e($eid, $ename, $sex, $bir, $phone, $idnum, $pos, $add, $email, $did) {
         global $db;
-        $stat = $db->prepare("INSERT INTO account('acc','pwd') VALUES (':username',':password');");
-        $stat->bindParam(':username',$username);
-        $stat->bindParam(':password',$password);
-
-        $stat->execute();
-    }*/
+        $stat = $db->prepare("INSERT INTO employee('eid','ename','sex','bir','phone','idnum','pos','add','email','did') VALUES (':eid',':ename',':sex',':bir',':phone',':idnum',':pos',':add',':email',':did');");
+        $stat->bindParam(':eid',$eid);
+        $stat->bindParam(':ename',$ename);
+        $stat->bindParam(':sex',$sex);
+        $stat->bindParam(':bir',$bir);
+        $stat->bindParam(':phone',$phone);
+        $stat->bindParam(':idnum',$idnum);
+        $stat->bindParam(':pos',$pos);
+        $stat->bindParam(':add',$add);
+        $stat->bindParam(':email',$email);
+        $stat->bindParam(':did',$did);
+        if($stat->execute())
+        {
+            echo"<span style=\"color:green;\">新增成功！</span>";
+            echo "<script>history.go(-1);</script>";
+        }
+        else
+        {
+            echo"<script>alert('新增失敗！');</script>";
+            echo "<script>history.go(-1);</script>";
+        }
+    }
     
-    function delete_e($username) 
+    function delete_e($eid) 
     {
         global $db;
         if($_SESSION['LoginSuccess']== true)
 		{
-            $stat =$db->prepare("DELETE FROM employee WHERE eid=:username;");
-            $stat->bindParam(':username', $username);
-            if($username == null)
+            $stat =$db->prepare("DELETE FROM employee WHERE eid=:eid;");
+            $stat->bindParam(':eid', $eid);
+            if($eid == null)
             {
                 echo"<span style=\"color:red;\">錯誤！不能為空！</span>";
+                echo "<script>history.go(-1);</script>";
+                
             }
             
             elseif($stat->execute())
                 {
                     echo"<span style=\"color:green;\">刪除成功！</span>";
-                    echo'<meta http-equiv="refresh" content="2; url=main.php">';
+                    echo "<script>history.go(-1);</script>";
                 }
             else
                 {
                     echo"<span style=\"color:red;\">刪除失敗！</span>";
-                    echo'<meta http-equiv="refresh" content="2; url=main.php">';
+                    echo "<script>history.go(-1);</script>";
                 }
         }
     }

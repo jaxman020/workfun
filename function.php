@@ -116,7 +116,7 @@ class member
     }
     function insert_e($eid, $ename, $sex, $bir, $phone, $idnum, $pos, $add, $email, $did) {
         global $db;
-        $stat = $db->prepare("INSERT INTO employee('eid','ename','sex','bir','phone','idnum','pos','add','email','did') VALUES (':eid',':ename',':sex',':bir',':phone',':idnum',':pos',':add',':email',':did');");
+        $stat = $db->prepare("INSERT INTO employee(eid,ename,sex,bir,phone,idnum,pos,add,email,did) VALUES (':eid',':ename',':sex',':bir',':phone',':idnum',':pos',':add',':email',':did');");
         $stat->bindParam(':eid',$eid);
         $stat->bindParam(':ename',$ename);
         $stat->bindParam(':sex',$sex);

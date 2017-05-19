@@ -20,7 +20,7 @@
             function getData(pageName)
             {
                 var req=new XMLHttpRequest();
-                req.open("get","http://127.0.0.1/workfun/workfun/"+pageName);
+                req.open("get","http://127.0.0.1/workfun/"+pageName);
                 req.onload=function(){
                     var featured=document.getElementById("featured");
                     featured.innerHTML=this.responseText;

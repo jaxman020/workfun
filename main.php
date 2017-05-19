@@ -56,8 +56,8 @@
 		<!-- Footer -->
 		<div id="featured">
 			<div class="container">
-                <span onclick="getData('EMPLOYEEtext.php');"><a class="button">新增</a></span>
-                <span onclick="getData('deletetext.php');"><a class="button">刪除</a></span>
+                <span onclick="getData('insert_e_text.php');"><a class="button">新增</a></span>
+                <span onclick="getData('delete_e_text.php');"><a class="button">刪除</a></span>
                 <span onclick="getData('EMPLOYEEtext.php');"><a class="button">修改</a></span>
 		<p>	
 			<?php

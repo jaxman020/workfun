@@ -1,7 +1,7 @@
 <meta charset="UTF8">
 <html>
 	<form action="insert_e.php" method="post">
-        <div class=out1 style='text-align:center'>EID：<input type="text" name="eid"><p></div><p>
+        <div class=out1 style='text-align:center'>EID：<input type="text" name="eid"><p></div>
         <div class=out1 style='text-align:center'>名字：<input type="text" name="ename"><p></div>
         <div class=out1 style='text-align:center'>性別：<input type="text" name="sex"><p></div>
         <div class=out1 style='text-align:center'>生日：<input type="date" name="bir"><p></div>

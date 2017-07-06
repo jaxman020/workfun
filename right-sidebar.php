@@ -50,11 +50,12 @@
 			<span onclick="getData('EMPLOYEEtext.php');"><a class="button">新增</a></span>
                 <span onclick="getData('deletetext.php');"><a class="button">刪除</a></span>
                 <span onclick="getData('EMPLOYEEtext.php');"><a class="button">修改</a></span>
-		<p>	
+        <p>	
 			<?php
-                $member->select_b($username);
+                $member->select_b();
             ?>
-		</p>
+		</p>    
+		
 			
 			</div>
 		</div>

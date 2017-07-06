@@ -61,7 +61,7 @@
 		<p>	
 			<?php
                 
-                $member->select_r($username);
+                $member->select_r();
             ?>
 		</p>
 			

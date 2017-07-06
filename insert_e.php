@@ -15,5 +15,5 @@ $pos = $_POST['pos'];
 $add = $_POST['add'];
 $email = $_POST['email'];
 $did = $_POST['did'];
-$member->insert_e($eid,$ename,$sex,$bir,$phone,$idnum,$pos,$add,$email,did);//使用新增使用者函數
+$member->insert_e($eid,$ename,$sex,$bir,$phone,$idnum,$pos,$add,$email,$did);//使用新增使用者函數
 ?>

@@ -7,20 +7,13 @@ class member
     var $login;
     var $login_sql;
     var $login_row;
-    var $select_b;
+    var $select_e;
     var $select_r;
-    var $table;
-    var $select_sql;
-    var $update;
-    var $update_sql;
-    var $delete_u;
-    var $delete_sql;
-    var $delete_e;
-    var $detlete_row;
-    var $getuser;
-    var $getuser_sql;
-    var $getuser_row;
+    var $select_a;
+    var $select_b;
     var $insert_e;
+    var $insert_a;
+    var $delete_e;
     
     //登入函數
     function login($username, $password) 
@@ -63,11 +56,10 @@ class member
         }
     }
     
-    function select_e($username)
+    function select_e()
     {
 		global $db;
-        $stat = $db->prepare("select * from employee ;");
-        $stat->bindParam(':username',$username);
+        $stat = $db->prepare("select * from employee;");
         $stat->execute();
         echo "<table style='border: solid 3px black;'><tr><th>EID</th><th style='border: solid 3px black;'>名字</th><th style='border: solid 3px black;'>性別</th>
         <th style='border: solid 3px black;'>生日</th><th style='border: solid 3px black;'>電話</th><th style='border: solid 3px black;'>身分證字號</th>
@@ -90,10 +82,12 @@ class member
     {
         global $db;
         $stat = $db->prepare("select * from record;");
-        $stat->bindParam(':username',$username);
         $stat->execute();
-        echo "<table style='border: solid 3px black;'><tr><th>EID</th><th style='border: solid 3px black;'>DID</th><th style='border: solid 3px black;'>RID</th>
-        <th style='border: solid 3px black;'>上班</th><th style='border: solid 3px black;'>下班</th></tr>";
+        echo "<table style='border: solid 3px black;'><tr><th>EID</th>
+                <th style='border: solid 3px black;'>DID</th>
+                <th style='border: solid 3px black;'>RID</th>
+                <th style='border: solid 3px black;'>上班</th>
+                <th style='border: solid 3px black;'>下班</th></tr>";
         while($row = $stat->fetch(PDO::FETCH_ASSOC)){
         echo "<tr><th style='border: solid 3px black;'>". $row["eid"]. 
              "</th><th style='border: solid 3px black;'>". $row["did"]. 
@@ -102,13 +96,30 @@ class member
              "</th><th style='border: solid 3px black;'>". $row["F2"]."</th></tr>";}  
     }
     
-    function select_b($username) 
+    function select_a($username) 
+    {
+        global $db;
+        $stat = $db->prepare("select * from account ");
+        $stat->bindParam(':username',$username);
+        $stat->execute();
+        echo "<table style='border: solid 3px black;'><tr><th>EID</th>
+        <th style='border: solid 3px black;'>帳號</th>
+        <th style='border: solid 3px black;'>密碼</th>
+        <th style='border: solid 3px black;'>IMEI</th></tr>";
+        while($row = $stat->fetch(PDO::FETCH_ASSOC)){
+            echo "<tr><th style='border: solid 3px black;'>". $row["eid"]. 
+                 "</th><th style='border: solid 3px black;'>". $row["acc"]. 
+                 "</th><th style='border: solid 3px black;'>". $row["pwd"].
+                 "</th><th style='border: solid 3px black;'>". $row["IMEI"]."</th></tr>";}
+    }
+    
+    function select_b() 
     {
         global $db;
         $stat = $db->prepare("select * from board;");
-        $stat->bindParam(':username',$username);
         $stat->execute();
-        echo "<table style='border: solid 3px black;'><tr><th>日期</th><th style='border: solid 3px black;'>公告</th></tr>";
+        echo "<table style='border: solid 3px black;'><tr><th>日期</th>
+        <th style='border: solid 3px black;'>公告</th></tr>";
         while($row = $stat->fetch(PDO::FETCH_ASSOC)){
         echo 
             "<tr><th style='border: solid 3px black;'>". $row["date"]. 
@@ -116,7 +127,7 @@ class member
     }
     function insert_e($eid, $ename, $sex, $bir, $phone, $idnum, $pos, $add, $email, $did) {
         global $db;
-        $stat = $db->prepare("INSERT INTO employee(eid,ename,sex,bir,phone,idnum,pos,add,email,did) VALUES (':eid',':ename',':sex',':bir',':phone',':idnum',':pos',':add',':email',':did');");
+        $stat = $db->prepare("INSERT INTO employee(eid, ename, sex, bir, phone, idnum, pos, add, email, did) VALUES (':eid',':ename',':sex',':bir',':phone',':idnum',':pos',':add',':email',':did');");
         $stat->bindParam(':eid',$eid);
         $stat->bindParam(':ename',$ename);
         $stat->bindParam(':sex',$sex);
@@ -127,6 +138,25 @@ class member
         $stat->bindParam(':add',$add);
         $stat->bindParam(':email',$email);
         $stat->bindParam(':did',$did);
+        if($stat->execute())
+        {
+            echo"<span style=\"color:green;\">新增成功！</span>";
+            echo "<script>history.go(-1);</script>";
+        }
+        else
+        {
+            echo"<script>alert('新增失敗！');</script>";
+            echo "<script>history.go(-1);</script>";
+        }
+    }
+    
+    function insert_a($eid, $acc, $pwd, $imei) {
+        global $db;
+        $stat = $db->prepare("INSERT INTO `account`(`eid`, `acc`, `pwd`, `IMEI`) VALUES (:eid, :acc, :pwd, :imei);");
+        $stat->bindParam(':eid',$eid);
+        $stat->bindParam(':acc',$acc);
+        $stat->bindParam(':pwd',$pwd);
+        $stat->bindParam(':imei',$imei);
         if($stat->execute())
         {
             echo"<span style=\"color:green;\">新增成功！</span>";

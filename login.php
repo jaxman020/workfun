@@ -1,7 +1,3 @@
-<?php
-     session_start();
-     $_SESSION['LoginSuccess'] = false;
-?>
 <!DOCTYPE HTML>
 <meta charset="UTF-8">
 <html>
